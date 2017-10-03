@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Beerhall.Models;
+using Beerhall.Models.HomeViewModels;
 
 namespace Beerhall.Controllers
 {

@@ -1,6 +1,6 @@
 using System;
 
-namespace Beerhall.Models
+namespace Beerhall.Models.HomeViewModels
 {
     public class ErrorViewModel
     {

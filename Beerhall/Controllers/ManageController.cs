@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Beerhall.Models;
 using Beerhall.Models.ManageViewModels;
 using Beerhall.Services;
+using Beerhall.Models.Domain;
 
 namespace Beerhall.Controllers
 {
@@ -480,7 +481,7 @@ namespace Beerhall.Controllers
             int currentPosition = 0;
             while (currentPosition + 4 < unformattedKey.Length)
             {
-                result.Append(unformattedKey.Substring(currentPosition, 4)).Append(" ");
+                result.Append(unformattedKey, currentPosition, 4).Append(" ");
                 currentPosition += 4;
             }
             if (currentPosition < unformattedKey.Length)

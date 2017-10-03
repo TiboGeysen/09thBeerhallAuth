@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Beerhall.Data;
 using Beerhall.Models;
 using Beerhall.Services;
+using Beerhall.Models.Domain;
+using Beerhall.Data.Repositories;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace Beerhall
 {
@@ -35,12 +38,14 @@ namespace Beerhall
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
-
+            services.AddScoped<IBrewerRepository, BrewerRepository>();
+            services.AddScoped<ILocationRepository, LocationRepository>();
+            services.AddScoped<BeerhallDataInitializer>();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, BeerhallDataInitializer beerhallDataInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -54,6 +59,7 @@ namespace Beerhall
             }
 
             app.UseStaticFiles();
+            app.UseStatusCodePages();
 
             app.UseAuthentication();
 
@@ -61,8 +67,9 @@ namespace Beerhall
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Brewer}/{action=Index}/{id?}");
             });
+            beerhallDataInitializer.InitializeData().Wait();
         }
     }
 }
