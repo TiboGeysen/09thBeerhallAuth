@@ -14,6 +14,7 @@ using Beerhall.Services;
 using Beerhall.Models.Domain;
 using Beerhall.Data.Repositories;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using System.Security.Claims;
 
 namespace Beerhall
 {
@@ -35,6 +36,13 @@ namespace Beerhall
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddAuthorization(options => {
+                options.AddPolicy("AdminOnly", policy => policy.RequireClaim(ClaimTypes.Role, "admin"));
+                options.AddPolicy("Customer", policy => policy.RequireClaim(ClaimTypes.Role, "customer"));
+            });
+
+            services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Brewer/Index");
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();

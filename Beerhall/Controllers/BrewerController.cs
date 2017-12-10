@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Beerhall.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "AdminOnly")]
     public class BrewerController : Controller
     {
         private readonly IBrewerRepository _brewerRepository;
