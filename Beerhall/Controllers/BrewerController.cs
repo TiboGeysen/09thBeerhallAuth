@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Beerhall.Controllers
 {
+    [AutoValidateAntiforgeryToken]
     [Authorize(Policy = "AdminOnly")]
     public class BrewerController : Controller
     {
