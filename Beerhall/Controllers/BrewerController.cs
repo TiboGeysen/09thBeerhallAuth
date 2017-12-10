@@ -5,9 +5,11 @@ using System.Linq;
 using Beerhall.Models.BrewerViewModels;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Beerhall.Controllers
 {
+    [Authorize]
     public class BrewerController : Controller
     {
         private readonly IBrewerRepository _brewerRepository;
@@ -18,6 +20,7 @@ namespace Beerhall.Controllers
             _locationRepository = locationRepository;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             IEnumerable<Brewer> brewers = _brewerRepository.GetAll().OrderBy(b => b.Name).ToList();
